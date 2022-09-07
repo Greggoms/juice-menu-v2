@@ -1,25 +1,36 @@
 import React from "react"
+import { v4 as uuid } from "uuid"
+import { HomepageContainer } from "../css"
+import { requestAccessToken } from "../utils/auth-flow"
 
-export default function Home() {
-  function loadXMLDoc() {
-    var xhttp = new XMLHttpRequest()
-    xhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("demo").innerHTML = this.responseText
-      }
-    }
-    xhttp.open("GET", "https://api.lightspeedapp.com/API/V3/Account.json", true)
-    xhttp.setRequestHeader(
-      "Authorization",
-      "Bearer 7474d63a7ac150b1dd2c4bfa48f161492d5e0b53"
-    )
-    xhttp.send()
+export default function Home({ location }) {
+  // https://stackoverflow.com/questions/53800162/getting-url-parameters-on-gatsbyjs
+  // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/get
+  const params = new URLSearchParams(location.search)
+  const code = params.get("code")
+  const state = params.get("state")
+
+  // Values start as null and are populated
+  // on redirect from Lightspeed
+  console.log("CODE =>", code)
+  console.log("STATE =>", state)
+
+  if (code !== null) {
+    requestAccessToken(code)
   }
+
   return (
-    <div id="demo">
-      <button type="button" onClick={() => loadXMLDoc()}>
-        Change Content
+    <HomepageContainer>
+      <h1>Lightspeed API Testing</h1>
+      <button>
+        <a
+          href={`https://cloud.lightspeedapp.com/oauth/authorize.php?response_type=code&client_id=${
+            process.env.CLIENT_ID
+          }&scope=employee:all&state=${uuid()}`}
+        >
+          Connect to Lightspeed
+        </a>
       </button>
-    </div>
+    </HomepageContainer>
   )
 }
