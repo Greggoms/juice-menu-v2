@@ -28,7 +28,7 @@ export default function Home({ location }) {
             process.env.CLIENT_ID
           }&scope=employee:all&state=${uuid()}`}
         >
-          Connect to Lightspeed
+          Connect to Lightspeed!!!
         </a>
       </button>
     </HomepageContainer>
