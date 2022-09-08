@@ -1,41 +1,64 @@
 import axios from "axios"
 
-// // To avoid using redux.
-// //
-// // The localSession / sessionStorage is a hot topic
-// // of debate. Some warn of XSS / CRSF attacks, others
-// // say it's fine, if you trust your app's packages.
-// //
-// // This is causing gatsby build errors..
-// export const tempToken = sessionStorage.getItem("tempToken")
-// console.log("tempToken =>", tempToken)
-
 // https://stackoverflow.com/questions/53800162/getting-url-parameters-on-gatsbyjs
 // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/get
 //
 // Values start as null and are populated
 // on redirect from Lightspeed
 export const initAuth = location => {
-  if (location) {
-    const params = new URLSearchParams(location.search)
-    const code = params.get("code")
-    // const state = params.get("state")
+  try {
+    console.log("init Auth")
+    if (location) {
+      const params = new URLSearchParams(location.search)
+      const code = params.get("code")
+      // const state = params.get("state")
 
-    if (code !== null) {
-      // sessionStorage.setItem("tempToken", code)
-      requestAccessToken(code)
+      if (code !== null) {
+        // sessionStorage.setItem("tempToken", code)
+        requestAccessToken(code)
+      }
     }
+  } catch (e) {
+    console.error(e)
   }
 }
 
 // There must be something wrong with this request..
 export const requestAccessToken = async urlCode => {
   console.log("urlCode: ", urlCode)
+
+  // const url = "https://cloud.lightspeedapp.com/oauth/access_token.php"
+
+  // const headers = {
+  //   "content-type": "application/json",
+  // }
+
+  // const body = {
+  //   client_id: process.env.GATSBY_CLIENT_ID,
+  //   client_secret: process.env.GATSBY_CLIENT_SECRET,
+  //   code: urlCode,
+  //   grant_type: "authorization_code",
+  // }
+
+  // const config = {
+  //   method: "POST",
+  //   headers,
+  //   body: JSON.stringify(body),
+  // }
+
+  // const response = await fetch(url, config)
+
+  // console.log(response)
+
+  // Send a POST request
   var options = {
     method: "POST",
     url: "https://cloud.lightspeedapp.com/oauth/access_token.php",
-    headers: { "content-type": "multipart/form-data" },
-    data: {
+    headers: {
+      "content-type": "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: {
       client_id: process.env.GATSBY_CLIENT_ID,
       client_secret: process.env.GATSBY_CLIENT_SECRET,
       code: urlCode,

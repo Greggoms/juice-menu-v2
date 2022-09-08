@@ -33,8 +33,7 @@ friendly. I'm constantly locked out due to cors errors.
 I am able to use the uri redirect set on the
 [Lightspeed Retail API Client Update](https://cloud.lightspeedapp.com/oauth/update.php)
 page to receive and parse the `code` and `state` parameters to ultimately
-send my first ever valid axios powered POST request. I can received a 304
-response now after authorizing with Lighspeed!
+send a valid axios powered POST request.
 
 ## The New Problem(s)
 
@@ -47,11 +46,22 @@ during the whole auth process. I currently have it setup like this:
    auth process. They login with their LS credentials and agree to authorize
    this app to do their bidding.
 2. Redirect back to `http.../oauth-redirect?code={code}&state={state}`.
-3. Found a way to store the `code` url param so I could use it in a POST
-   request for an access_token. I can't seem to get an access_token using the
-   param in a POST
+3. Immediately attempt a POST request with the returned `code` url param in
+   exchange for an access_token. I recieve a status code of 200, but the request fails.
 4. Click a button to trigger an api call. I'm trying to test the Account endpoint
    `https://api.lightspeedapp.com/API/V3/Account.json`. These are the errors I receive:
+
+#### POSTing to receive the access_token
+
+> `"error": "invalid_request"`
+
+> `"error_description":"The request method must be POST when requesting an access token"`
+
+> `"error_uri":"http:\/\/tools.ietf.org\/html\/rfc6749#section-3.2"}`
+
+The error description doesn't make sense because the request _is_ a POST request..
+
+#### API Request Errors
 
 - `Access to XMLHttpRequest at 'https://cloud.lightspeedapp.com/oauth/access_token.php' from origin 'http://localhost:8000' has been blocked by CORS policy: No 'Access-Control-Allow-Origin' header is present on the requested resource.`
 - Axios Error: `ERR_NETWORK: Network Error`
@@ -62,10 +72,6 @@ The Network tab shows a `400 Bad Request` error.
 I'm aware that I'm requesting a resource to an unsecure http:// origin.
 This occurs on a Netlify hosted https:// site as well though.
 
-## General Problems | Possible Solutions
-
-I'm not sure if I should save the access_token in the same way as the `code` url param.
-I can't figure out the right way to use the `code` param to have an access_token returned to me.
-I believe my api calls are invalid because I'm sending the `code` url param by mistake
-when using a `Authorization: Bearer {access_token}` request header, probably because I have no
-other token available to me.
+My api calls are invalid because I'm unable to send an access token when using
+a `Authorization: Bearer {access_token}` request header. I am unable to
+receive the access_token during the POST to get one.

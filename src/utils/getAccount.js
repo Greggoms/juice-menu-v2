@@ -6,7 +6,9 @@ const getAccount = () => {
     var options = {
       method: "GET",
       url: "https://api.lightspeedapp.com/API/V3/Account.json",
-      headers: { Authorization: `Bearer ${"cantFigureThisOut"}` },
+      headers: {
+        Authorization: `Bearer 12ad9b6945cd34cdd941a7afcd4e68702756ee10`,
+      },
     }
     axios
       .request(options)
