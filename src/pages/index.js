@@ -1,36 +1,32 @@
 import React from "react"
 import { v4 as uuid } from "uuid"
+import { tempToken } from "../utils/auth-flow"
 import { HomepageContainer } from "../css"
-import { requestAccessToken } from "../utils/auth-flow"
+import JuiceMenu from "../components/JuiceMenu"
 
-export default function Home({ location }) {
-  // https://stackoverflow.com/questions/53800162/getting-url-parameters-on-gatsbyjs
-  // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/get
-  //
-  // Values start as null and are populated
-  // on redirect from Lightspeed
-  const params = new URLSearchParams(location.search)
-  const code = params.get("code")
-  const state = params.get("state")
-
-  if (code !== null) {
-    console.log("CODE =>", code)
-    console.log("STATE =>", state)
-    requestAccessToken(code)
-  }
+export default function Home() {
+  console.log("temptoken home-", tempToken)
 
   return (
     <HomepageContainer>
-      <h1>Lightspeed API Testing</h1>
-      <button>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "1rem",
+          alignItems: "flex-start",
+        }}
+      >
+        <h1>Lightspeed API Testing</h1>
         <a
           href={`https://cloud.lightspeedapp.com/oauth/authorize.php?response_type=code&client_id=${
-            process.env.CLIENT_ID
+            process.env.GATSBY_CLIENT_ID
           }&scope=employee:all&state=${uuid()}`}
         >
-          Connect to Lightspeed
+          {tempToken !== null ? `try to reconnect?` : `Lightspeed API Testing`}
         </a>
-      </button>
+        {!tempToken ? <p>No Token</p> : <JuiceMenu />}
+      </div>
     </HomepageContainer>
   )
 }
