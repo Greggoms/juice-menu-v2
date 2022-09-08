@@ -6,16 +6,16 @@ import { requestAccessToken } from "../utils/auth-flow"
 export default function Home({ location }) {
   // https://stackoverflow.com/questions/53800162/getting-url-parameters-on-gatsbyjs
   // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/get
+  //
+  // Values start as null and are populated
+  // on redirect from Lightspeed
   const params = new URLSearchParams(location.search)
   const code = params.get("code")
   const state = params.get("state")
 
-  // Values start as null and are populated
-  // on redirect from Lightspeed
-  console.log("CODE =>", code)
-  console.log("STATE =>", state)
-
   if (code !== null) {
+    console.log("CODE =>", code)
+    console.log("STATE =>", state)
     requestAccessToken(code)
   }
 
@@ -28,7 +28,7 @@ export default function Home({ location }) {
             process.env.CLIENT_ID
           }&scope=employee:all&state=${uuid()}`}
         >
-          Connect to Lightspeed!!!
+          Connect to Lightspeed
         </a>
       </button>
     </HomepageContainer>
