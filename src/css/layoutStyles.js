@@ -11,6 +11,7 @@ export const LayoutContainer = styled.div`
   font-family: "Open Sans", sans-serif;
   /* To keep footer at bottom. The rest is in gatsby-browser */
   height: 100%;
+
   header {
     grid-area: header;
 

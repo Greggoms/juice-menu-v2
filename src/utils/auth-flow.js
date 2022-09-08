@@ -1,12 +1,14 @@
 import axios from "axios"
 
-// To avoid using redux.
-//
-// The localSession / sessionStorage is a hot topic
-// of debate. Some warn of XSS / CRSF attacks, others
-// say it's fine, if you trust your app's packages.
-export const tempToken = sessionStorage.getItem("tempToken")
-console.log("tempToken =>", tempToken)
+// // To avoid using redux.
+// //
+// // The localSession / sessionStorage is a hot topic
+// // of debate. Some warn of XSS / CRSF attacks, others
+// // say it's fine, if you trust your app's packages.
+// //
+// // This is causing gatsby build errors..
+// export const tempToken = sessionStorage.getItem("tempToken")
+// console.log("tempToken =>", tempToken)
 
 // https://stackoverflow.com/questions/53800162/getting-url-parameters-on-gatsbyjs
 // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams/get
@@ -20,25 +22,25 @@ export const initAuth = location => {
     // const state = params.get("state")
 
     if (code !== null) {
-      sessionStorage.setItem("tempToken", code)
+      // sessionStorage.setItem("tempToken", code)
+      requestAccessToken(code)
     }
   }
 }
 
 // There must be something wrong with this request..
 export const requestAccessToken = async urlCode => {
+  console.log("urlCode: ", urlCode)
   var options = {
     method: "POST",
     url: "https://cloud.lightspeedapp.com/oauth/access_token.php",
     headers: { "content-type": "multipart/form-data" },
-    data: new URLSearchParams({
+    data: {
       client_id: process.env.GATSBY_CLIENT_ID,
       client_secret: process.env.GATSBY_CLIENT_SECRET,
       code: urlCode,
       grant_type: "authorization_code",
-      // redirect_uri: "http://localhost:8000/app/oauth-redirect",
-      // redirect_uri: "https://juicemenu2.netlify.app/app/oauth-redirect",
-    }),
+    },
   }
 
   const response = await axios
@@ -47,9 +49,10 @@ export const requestAccessToken = async urlCode => {
       // not returned
       console.log(`response`)
       // not returned
-      console.log(response())
+      console.log(response)
+      console.log(response.data)
       // not returned
-      return response
+      return response.data
     })
     .catch(function (error) {
       // always returned

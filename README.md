@@ -1,5 +1,13 @@
 # Lightspeed API Testing
 
+Quick Links
+
+- [Lightspeed Docs - Auth Overview](https://developers.lightspeedhq.com/retail/authentication/authentication-overview/)
+- [Lightspeed Docs - Access Token](https://developers.lightspeedhq.com/retail/authentication/access-token/)
+- [OAuth2 Authentication Code with node.js snippets](https://auth0.com/docs/get-started/authentication-and-authorization-flow/call-your-api-using-the-authorization-code-flow)
+
+## Overview
+
 There is a very limited amount of help for a node.js dev
 to implement the
 [OAuth2 Authentication Code](https://auth0.com/docs/get-started/authentication-and-authorization-flow/call-your-api-using-the-authorization-code-flow)
