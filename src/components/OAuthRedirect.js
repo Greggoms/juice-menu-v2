@@ -11,7 +11,8 @@ const OAuthRedirect = ({ location }) => {
   const userAuth = useSelector(selectAuth)
 
   const baseUri = "https://cloud.lightspeedapp.com/oauth/access_token.php"
-  const redirectUri = "http://localhost:8000/app"
+  // const redirectUri = "http://localhost:8000/app"
+  const redirectUri = "https://juicemenu2.netlify.app/app"
 
   // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
   // This stores the code=${code} URL param returned when the
