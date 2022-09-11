@@ -1,11 +1,11 @@
 import React from "react"
 import { Router } from "@reach/router"
-import JuiceMenu from "../components/JuiceMenu"
+import OAuthRedirect from "../components/OAuthRedirect"
 
 const App = () => {
   return (
     <Router>
-      <JuiceMenu path="/app/oauth-redirect" />
+      <OAuthRedirect path="/app" />
     </Router>
   )
 }

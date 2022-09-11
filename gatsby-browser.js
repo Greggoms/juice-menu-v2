@@ -1,14 +1,18 @@
 import React from "react"
+import { Provider } from "react-redux"
+import { store } from "./src/app-redux/store"
 import { createGlobalStyle, ThemeProvider } from "styled-components"
 import theme from "./src/theme"
 import Layout from "./src/components/Layout"
 
 export const wrapRootElement = ({ element, props }) => {
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyles />
-      <Layout {...props}>{element}</Layout>
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+        <GlobalStyles />
+        <Layout {...props}>{element}</Layout>
+      </ThemeProvider>
+    </Provider>
   )
 }
 
