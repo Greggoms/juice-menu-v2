@@ -4,6 +4,9 @@ import { selectAuth } from "../app-redux/features/authSlice"
 import { v4 as uuid } from "uuid"
 import { Button, ResponseContainer } from "../css"
 
+// You won't see this in action until the user
+// "logs in" by holding the access_token.
+// This is why most of it is commented out.
 const Api = () => {
   const userAuth = useSelector(selectAuth)
   const [recentlyPlayed, setApiCall] = useState()
@@ -16,9 +19,7 @@ const Api = () => {
 
   const getApiResult = () => {
     console.log("API Test Call")
-    // fetch(
-    //   `${baseUri}`,
-    //   {
+    // fetch(baseUri, {
     //     method: "GET",
     //     headers: {
     //       Authorization: `Bearer ${userAuth.access_token}`,

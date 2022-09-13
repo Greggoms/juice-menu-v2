@@ -6,13 +6,9 @@ import { login, selectAuth } from "../app-redux/features/authSlice"
 // This is what happens immediately after being
 // redirected from spotify's auth login process.
 const OAuthRedirect = ({ location }) => {
-  // to store keys in redux
+  // to store & select keys in redux
   const dispatch = useDispatch()
   const userAuth = useSelector(selectAuth)
-
-  const baseUri = "https://cloud.lightspeedapp.com/oauth/access_token.php"
-  // const redirectUri = "http://localhost:8000/app"
-  const redirectUri = "https://juicemenu2.netlify.app/app"
 
   // https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams
   // This stores the code=${code} URL param returned when the
@@ -20,30 +16,31 @@ const OAuthRedirect = ({ location }) => {
   const params = new URLSearchParams(location.search)
   const code = params.get("code")
 
-  // const formData = new FormData()
-  // formData.append("client_id", process.env.GATSBY_CLIENT_ID)
-  // formData.append("client_secret", process.env.GATSBY_CLIENT_SECRET)
-  // formData.append("code", code)
-  // formData.append("grant_type", "authorization_code")
-  // formData.append("redirect_uri", redirectUri)
+  const formData = new FormData()
+  formData.append("client_id", process.env.GATSBY_CLIENT_ID)
+  formData.append("client_secret", process.env.GATSBY_CLIENT_SECRET)
+  formData.append("code", code)
+  formData.append("grant_type", "authorization_code")
 
   // Retreieve an access_token once you hit the redirect_uri
   if (code && !userAuth) {
+    console.log(formData.entries())
     try {
-      fetch(baseUri, {
+      fetch("https://cloud.lightspeedapp.com/oauth/access_token.php", {
         method: "POST",
         headers: {
-          // "Access-Control-Allow-Origin": "http://localhost:8000/app",
-          // Accept: "application/json",
+          //   "Access-Control-Allow-Origin": "http://localhost:8000",
+          // "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "multipart/form-data",
         },
-        // body: formData,
-        body: new URLSearchParams({
-          grant_type: "authorization_code",
-          code: code,
-          redirect_uri: redirectUri,
-          client_id: process.env.GATSBY_CLIENT_ID,
-          client_secret: process.env.GATSBY_CLIENT_SECRET,
-        }),
+        body: formData,
+        // // An alternative below
+        // body: new URLSearchParams({
+        //   client_id: process.env.GATSBY_CLIENT_ID,
+        //   client_secret: process.env.GATSBY_CLIENT_SECRET,
+        //   grant_type: "authorization_code",
+        //   code: code,
+        // }),
       })
         .then(response => console.log(response))
         // .then(data => {

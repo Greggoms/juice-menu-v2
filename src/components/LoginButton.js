@@ -1,7 +1,7 @@
 import React from "react"
 import { v4 as uuid } from "uuid"
 
-// All this does is render a link to initiate the auth flow.
+// Render a link to initiate the auth flow.
 // It includes a lot of parameters, some ~optional~.
 const LoginButton = () => {
   const baseUri = "https://cloud.lightspeedapp.com/oauth/authorize.php"

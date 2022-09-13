@@ -5,6 +5,9 @@ import Api from "../components/Api"
 import LoginButton from "../components/LoginButton"
 import { HomepageContainer } from "../css"
 
+// Prompt the user to login.
+// If they are logged in, show the
+// authenticated content.
 const Home = () => {
   const userAuth = useSelector(selectAuth)
 

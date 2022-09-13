@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <HeaderContainer>
       <div className="content">
-        <Link to="/">header</Link>
+        <Link to="/">lightspeed-oauth</Link>
       </div>
     </HeaderContainer>
   )
