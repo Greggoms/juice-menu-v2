@@ -20,7 +20,7 @@ making progress.
 ## The Old Problem
 
 I was approaching this api from the wrong angle. I was expecting an
-easier setup that possibly used nifty packages. The result would allow
+easier setup that possibly used a nifty package. The result would allow
 the data to be easily accessible to the public. I realize now that the
 only way to receive the data is to authorize a valid Lightspeed account
 before any reads/writes can occur.
@@ -53,11 +53,9 @@ during the whole auth process. I currently have it setup like this:
 
 #### POSTing to receive the access_token
 
-> `"error": "invalid_request"`
-
-> `"error_description":"The request method must be POST when requesting an access token"`
-
-> `"error_uri":"http:\/\/tools.ietf.org\/html\/rfc6749#section-3.2"}`
+`"error": "invalid_request"`
+`"error_description":"The request method must be POST when requesting an access token"`
+`"error_uri":"http:\/\/tools.ietf.org\/html\/rfc6749#section-3.2"}`
 
 The error description doesn't make sense because the request _is_ a POST request..
 
