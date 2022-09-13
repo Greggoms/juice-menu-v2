@@ -7,7 +7,7 @@ const getAccount = () => {
       method: "GET",
       url: "https://api.lightspeedapp.com/API/V3/Account.json",
       headers: {
-        // Authorization: `Bearer {access_token_here...}`,
+        Authorization: `Bearer {access_token_here}`,
       },
     }
     axios
