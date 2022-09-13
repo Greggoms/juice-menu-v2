@@ -1,5 +1,5 @@
-import { navigate } from "gatsby"
 import React from "react"
+import { navigate } from "gatsby"
 import { useDispatch, useSelector } from "react-redux"
 import { login, selectAuth } from "../app-redux/features/authSlice"
 
@@ -22,32 +22,38 @@ const OAuthRedirect = ({ location }) => {
   formData.append("code", code)
   formData.append("grant_type", "authorization_code")
 
+  async function getToken() {
+    await fetch("https://cloud.lightspeedapp.com/oauth/access_token.php", {
+      method: "POST",
+      headers: {
+        // Accept: "application/json",
+        // "Access-Control-Allow-Origin": "http://localhost:8000",
+        // "Content-Type": "application/x-www-form-urlencoded",
+        // Authorization: `Bearer ${btoa(process.env.GATSBY_CLIENT_ID)}`,
+        // "Content-Type": "multipart/form-data",
+      },
+      body: formData,
+      // // An alternative below
+      // body: new URLSearchParams({
+      //   client_id: process.env.GATSBY_CLIENT_ID,
+      //   client_secret: process.env.GATSBY_CLIENT_SECRET,
+      //   grant_type: "authorization_code",
+      //   code: code,
+      // }),
+    })
+      .then(response => console.log(response))
+      // .then(data => {
+      //   console.log(data)
+      //   dispatch(login(data))
+      //   navigate("/")
+      // })
+      .catch(err => console.error(err))
+  }
+
   // Retreieve an access_token once you hit the redirect_uri
   if (code && !userAuth) {
     try {
-      fetch("https://cloud.lightspeedapp.com/oauth/access_token.php", {
-        method: "POST",
-        headers: {
-          //   "Access-Control-Allow-Origin": "http://localhost:8000",
-          // "Content-Type": "application/x-www-form-urlencoded",
-          "Content-Type": "multipart/form-data",
-        },
-        body: formData,
-        // // An alternative below
-        // body: new URLSearchParams({
-        //   client_id: process.env.GATSBY_CLIENT_ID,
-        //   client_secret: process.env.GATSBY_CLIENT_SECRET,
-        //   grant_type: "authorization_code",
-        //   code: code,
-        // }),
-      })
-        .then(response => console.log(response))
-        // .then(data => {
-        //   console.log(data)
-        //   dispatch(login(data))
-        //   navigate("/")
-        // })
-        .catch(err => console.error(err))
+      getToken()
     } catch (err) {
       console.error(err)
     }
