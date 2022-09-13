@@ -4,6 +4,9 @@ const theme = {
     green: "#1db954",
     linkDark: "#027CB5",
     linkLight: "#A7ECF2",
+    purple: "#B149BF",
+    salmon: "#F26A6B",
+    yellowLight: "#FAF1AC",
   },
   grayscale: {
     light1: "#F2F2F2",

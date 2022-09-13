@@ -24,7 +24,6 @@ const OAuthRedirect = ({ location }) => {
 
   // Retreieve an access_token once you hit the redirect_uri
   if (code && !userAuth) {
-    console.log(formData.entries())
     try {
       fetch("https://cloud.lightspeedapp.com/oauth/access_token.php", {
         method: "POST",

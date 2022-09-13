@@ -4,7 +4,7 @@ import OAuthRedirect from "../components/OAuthRedirect"
 
 // This is how I handle the redirect. If a user
 // lands on http...com/app then show the OAuthRedirect
-// componentto handle gaining the access_token.
+// component to handle gaining the access_token.
 const App = () => {
   return (
     <Router>

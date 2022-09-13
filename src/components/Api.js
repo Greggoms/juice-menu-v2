@@ -9,7 +9,7 @@ import { Button, ResponseContainer } from "../css"
 // This is why most of it is commented out.
 const Api = () => {
   const userAuth = useSelector(selectAuth)
-  const [recentlyPlayed, setApiCall] = useState()
+  const [apiCall, setApiCall] = useState()
 
   const baseUri = "https://cloud.lightspeedapp.com/oauth/authorize.php"
   const responseType = "code"
